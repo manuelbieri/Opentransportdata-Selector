@@ -7,8 +7,13 @@ class Selector:
         self.file = file
         self.filter_args = []
 
+    def setFile(self, file: DataSelector.loader.File):
+        assert file is not None
+        self.file = file
+
     def filter(self, filter_args: list) -> list:
         assert len(filter_args) > 0
+        assert self.file is not None
         self.filter_args = filter_args
         filtered_list = []
 

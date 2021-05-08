@@ -25,20 +25,26 @@ class Driver:
 
         while start_date <= end_date:
             filename = start_date.strftime("%Y-%m-%d") + '_istdaten.csv'
-            file = DataSelector.loader.File(self.data_path + '/' + filename)
-            file.readCSV()
-            if self.filter:
-                parser = DataSelector.parser.Selector(file)
-                filtered_result = parser.filter(self.filter)
-            else:
-                filtered_result = file.getDictList()
-
-            self.filtered.extend(filtered_result)
+            file = self.loadFile(filename)
+            self.filtered.extend(self.filterDate(file))
             print(start_date.__str__() + ' done')
             start_date += datetime.timedelta(days=1)
 
         path = self.writer.write_csv(self.filtered)
         print('Wrote to ' + path)
+
+    def loadFile(self, filename: str):
+        assert filename is not None
+        return DataSelector.loader.File(self.data_path + '/' + filename)
+
+    def filterDate(self, file: DataSelector.loader.File) -> list:
+        file.readCSV()
+        if self.filter:
+            parser = DataSelector.parser.Selector(file)
+            filtered_result = parser.filter(self.filter)
+        else:
+            filtered_result = file.getDictList()
+        return filtered_result
 
     def getFiltered(self) -> list:
         assert len(self.filtered) > 0
@@ -58,4 +64,4 @@ class Driver:
 if __name__ == '__main__':
     selector = Driver('output', 'data')
     selector.setFilters([{'name': 'HALTESTELLEN_NAME', 'value': 'Bern'}, {'name': 'VERKEHRSMITTEL_TEXT', 'value': 'IC'}])
-    selector.filterDateRange(Driver.convertStringToDate('2021-01-01'), Driver.convertStringToDate('2021-04-30'))
+    selector.filterDateRange(Driver.convertStringToDate('2021-01-01'), Driver.convertStringToDate('2021-01-3'))
