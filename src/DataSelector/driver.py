@@ -6,7 +6,7 @@ import DataSelector.writer
 
 
 class Driver:
-    def __init__(self, output_dir: str, data_path: str):
+    def __init__(self, output_dir: str, data_path: str) -> None:
         assert output_dir is not None
         assert data_path is not None
         assert os.path.isdir(output_dir)
@@ -33,7 +33,7 @@ class Driver:
         path = self.writer.write_csv(self.filtered)
         print('Wrote to ' + path)
 
-    def loadFile(self, filename: str):
+    def loadFile(self, filename: str) -> DataSelector.loader.File:
         assert filename is not None
         return DataSelector.loader.File(self.data_path + '/' + filename)
 
@@ -50,7 +50,7 @@ class Driver:
         assert len(self.filtered) > 0
         return self.filtered
 
-    def setFilters(self, filter_args: list):
+    def setFilters(self, filter_args: list) -> None:
         assert len(filter_args) > 0
         self.filter = filter_args
 

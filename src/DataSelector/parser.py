@@ -7,7 +7,7 @@ class Selector:
         self.file = file
         self.filter_args = []
 
-    def setFile(self, file: DataSelector.loader.File):
+    def setFile(self, file: DataSelector.loader.File) -> None:
         assert file is not None
         self.file = file
 

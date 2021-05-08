@@ -4,7 +4,7 @@ import os
 
 
 class Writer:
-    def __init__(self, output_dir):
+    def __init__(self, output_dir) -> None:
         assert output_dir is not None
         assert os.path.isdir(output_dir)
         self.output_dir = output_dir

@@ -4,7 +4,7 @@ import os.path
 
 
 class File:
-    def __init__(self, path, delimiter=';'):
+    def __init__(self, path, delimiter=';') -> None:
         assert os.path.isfile(path)
         assert delimiter is not None
         self.path = path
