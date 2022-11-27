@@ -1,5 +1,6 @@
 import os.path
 import datetime
+
 import DataSelector.loader
 import DataSelector.parser
 import DataSelector.writer
@@ -9,8 +10,8 @@ class Driver:
     def __init__(self, output_dir: str, data_path: str) -> None:
         assert output_dir is not None
         assert data_path is not None
-        assert os.path.isdir(output_dir)
-        assert os.path.isdir(data_path)
+        assert os.path.isdir(output_dir), "No valid output path specified"
+        assert os.path.isdir(data_path), "No valid data input path specified"
 
         self.output_path = output_dir
         self.data_path = data_path
@@ -18,7 +19,7 @@ class Driver:
         self.filter = []
         self.writer = DataSelector.writer.Writer(self.output_path)
 
-    def filterDateRange(self, start_date: datetime, end_date: datetime) -> None:
+    def filterDateRange(self, start_date: datetime, end_date: datetime) -> str:
         assert start_date is not None
         assert end_date is not None
         assert start_date <= end_date
@@ -27,11 +28,9 @@ class Driver:
             filename = start_date.strftime("%Y-%m-%d") + '_istdaten.csv'
             file = self.loadFile(filename)
             self.filtered.extend(self.filterDate(file))
-            print(start_date.__str__() + ' done')
             start_date += datetime.timedelta(days=1)
 
-        path = self.writer.write_csv(self.filtered)
-        print('Wrote to ' + path)
+        return self.writer.write_csv(self.filtered)
 
     def loadFile(self, filename: str) -> DataSelector.loader.File:
         assert filename is not None

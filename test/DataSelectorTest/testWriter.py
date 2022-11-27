@@ -1,12 +1,13 @@
 import os.path
-import unittest
+import DataSelectorTest.testAbstract
+
 import DataSelector.writer
 import DataSelector.loader
 
 
-class TestFile(unittest.TestCase):
+class TestFile(DataSelectorTest.testAbstract.AbstractTest):
     def setUp(self) -> None:
-        self.dir = 'output'
+        self.dir = TestFile.output_path
         self.writer = DataSelector.writer.Writer(self.dir)
 
     def tearDown(self) -> None:

@@ -1,17 +1,18 @@
-import unittest
-from unittest.mock import Mock
+import DataSelectorTest.testAbstract
+import unittest.mock
+
 import DataSelector.parser
 import DataSelector.loader
 import DataSelector.driver
 
 
-class TestFile(unittest.TestCase):
+class TestFile(DataSelectorTest.testAbstract.AbstractTest):
     def setUp(self) -> None:
-        self.driver = DataSelector.driver.Driver('output', 'resources')
-        self.file = Mock()
-        self.file.getDictList = Mock(return_value=[{'header1': 'value11', 'header2': 'value12', 'header3': 'value13'}, {'header1': 'value21', 'header2': '', 'header3': 'value23'}])
-        self.file1 = Mock()
-        self.file1.getDictList = Mock(return_value=[{'header1': 'value31', 'header2': 'value32', 'header3': 'value33'}, {'header1': 'value41', 'header2': 'value42', 'header3': 'value43'}])
+        self.driver = DataSelector.driver.Driver(TestFile.output_path, TestFile.input_path)
+        self.file = unittest.mock.Mock()
+        self.file.getDictList = unittest.mock.Mock(return_value=[{'header1': 'value11', 'header2': 'value12', 'header3': 'value13'}, {'header1': 'value21', 'header2': '', 'header3': 'value23'}])
+        self.file1 = unittest.mock.Mock()
+        self.file1.getDictList = unittest.mock.Mock(return_value=[{'header1': 'value31', 'header2': 'value32', 'header3': 'value33'}, {'header1': 'value41', 'header2': 'value42', 'header3': 'value43'}])
 
     def test_setUpWithInvalidPaths(self):
         self.assertRaises(AssertionError, lambda: DataSelector.driver.Driver('invalidOutput', 'invalidResources'))
